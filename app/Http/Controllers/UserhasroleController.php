@@ -54,22 +54,16 @@ class UserhasroleController extends Controller
           
             $rol = Role::findById($role);
 
-            $users->assignRole($rol->name);
-            //->givePermissionTo('View Post');
+            $users->assignRole($rol->name);         
 
-        }     
+        }   
 
        return redirect()->route('userhasroles.index');
 
     }
     
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
