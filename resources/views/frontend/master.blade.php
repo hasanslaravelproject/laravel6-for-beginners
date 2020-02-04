@@ -8,13 +8,13 @@
 
         @include('frontend.partials._head')
 
-        
+
     </head>
     <body>
-        
+
         <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed page-header-dark main-content-narrow">
-            
-               
+
+
             @include('frontend.partials._sidebar')
             <!-- END Sidebar -->
 

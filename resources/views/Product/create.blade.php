@@ -45,8 +45,13 @@
             <input type="color" name="color" placeholder="product color" class="form-control col-md-6 offset-3" >
         </div>
 
+        <div class="form-group">
+            <label for="">Product price</label>
+            <input type="number" name="price" placeholder="product price" class="form-control col-md-6 offset-3" >
+        </div>
+
         <button class ="btn btn-success">Submit</button>
-        
+
     </form>
 </div>
 

@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('size');
             $table->string('color');
             $table->string('category');
+            $table->string('price');
             $table->integer('status')->default(1);
             $table->timestamps();
             $table->softDeletes();

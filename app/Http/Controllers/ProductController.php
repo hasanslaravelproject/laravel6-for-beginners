@@ -10,8 +10,9 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::latest()->paginate(5);
-        return view('Product.index', compact('products'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $productslist = Product::latest()->paginate(5);
+
+        return view('Product.index', compact('productslist'))->with('i', (request()->input('page', 1) - 1) * 5);
 
     }
 
@@ -34,10 +35,12 @@ class ProductController extends Controller
         $abc->image=$b_image;
         $abc->brand = $request->brand;
         $abc->size = $request->size;
+        $abc->price = $request->price;
         $abc->color = $request->color;
+
         $abc->save();
 
-        return view('Product.index');
+        return redirect('products');
 
     }
 
@@ -67,7 +70,7 @@ class ProductController extends Controller
         $abc->image=$b_image;
         $abc->brand = $request->brand;
         $abc->size = $request->size;
-        $abc->color = $request->color;
+        $abc->price = $request->price;
         $abc->update();
 
         return redirect()->route('products.index')
