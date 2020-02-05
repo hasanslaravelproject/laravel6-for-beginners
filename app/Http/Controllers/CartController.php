@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -15,6 +15,7 @@ class CartController extends Controller
      */
     public function index()
     {
+
 
     }
       public function addtocart(Request $request)
@@ -33,7 +34,9 @@ class CartController extends Controller
 
    public function cartlist()
    {
+
    $carts= Cart::content();
+
 
 return view('Cart.cart',compact('carts'));
 
@@ -100,8 +103,14 @@ return view('Cart.cart',compact('carts'));
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $rowID='')
     {
-        //
+
+        Cart::remove($rowID);
+        //Cart::destroy($rowID);
+
+
+       return redirect()->back()
+            ->with('success','Product deleted successfully');
     }
 }

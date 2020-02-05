@@ -1,5 +1,6 @@
 <?php
 
+use App\Product;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -21,4 +22,14 @@ function edit_btn_helper($route_name='',$data_id=''){
 function addtocart_btn_helper($pro_id='',$product_name='',$price=''){
     $btn_html='<a href="javascript:void(0)" data-product_id="'.$pro_id.'" data-product_name="'.$product_name.'"  data-price="'.$price.'" class="addToCart btn btn-success btn-block">Add to Cart</a>';
     return  $btn_html;
+}
+
+function delete_btn_helper($route_name='',$data_id=''){
+    $delete_html='<a href="'.route($route_name, $data_id).'" class="btn btn-danger" ><i class="fa fa-trash"> </i> delete</a>';
+    return  $delete_html;
+}
+
+function single_product($productID=''){
+   $singleproduct= Product::find($productID);
+   return $singleproduct;
 }
