@@ -25,7 +25,7 @@
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="cart_list">
                 <?php $count=1;?>
             @if(!empty($carts))
                @foreach ($carts as $item)
@@ -35,12 +35,24 @@
                 <th scope="row">{{ $count++ }}</th>
                 <td><img src="{{ asset('/upload/'.single_product($item->id)->image)  }}" style="height:40px;width:35px"></td>
                 <td>{{  $item->name }}</td>
-                <td>{{  $item->price }}</td>
-                <td>{{  $item->qty }}</td>
-                <td>{{   $item->price * $item->qty }}</td>
+                <td>{{ single_product($item->id)->price }}</td>
+                <td>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon btn btn-info"><i class="fa fa-minus"></i></span>
+                        <input type="text" class="form-inline text-center current-qty_{{$item->id}} " style="width:40px" value="{{ $item->qty   }}">
+                           <span class="input-group-addon btn btn-info inc-qty"  data-row_id="{{  $item->rowId }}" data-product_id="{{  $item->id }}"><i class="fa fa-plus"></i></span>
+
+                        </div>
+                    </div>
+
+
+                  </td>
+                <td>{{   $item->price }}</td>
 
                 <td>
                     {!! delete_btn_helper('carts.delete', $item->rowId) !!}
+
 
                 </td>
 
@@ -64,6 +76,29 @@
         </div>
     </div>
 </div>
+
+
+<script>
+//$('.inc-qty').on('click',function(){
+    $('body').on('click','.inc-qty',function(){
+    var rowId=$(this).data('row_id');
+    var product_id=$(this).data('product_id');
+    var  current_qty=$('.current-qty_'+product_id).val();
+    $.ajax({
+       type: 'get',
+       dataType: "json",
+       url: '{{ URL::route('updateCart')}}',
+       data:{rowId:rowId,product_id:product_id,current_qty:current_qty},
+       success: function (response) {
+           console.log(response);
+           $('.cart_list').html(response.cart);
+           $('.cart_count').html(response.cardcount);
+       }
+  });
+});
+
+
+</script>
 
 
 

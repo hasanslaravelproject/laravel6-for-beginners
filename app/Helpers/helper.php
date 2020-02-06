@@ -25,8 +25,13 @@ function addtocart_btn_helper($pro_id='',$product_name='',$price=''){
 }
 
 function delete_btn_helper($route_name='',$data_id=''){
-    $delete_html='<a href="'.route($route_name, $data_id).'" class="btn btn-danger" ><i class="fa fa-trash"> </i> delete</a>';
+    $delete_html='<a href="'.route($route_name, $data_id).'" class="btn btn-danger" ><i class="fa fa-times"> </i></a>';
     return  $delete_html;
+}
+
+function increment_btn_helper($route_name='',$data_id=''){
+    $increment_html='<a href="'.route($route_name, $data_id).'" class="btn btn-info" ><i class="fa fa-plus-square"> </i></a>';
+    return  $increment_html;
 }
 
 function single_product($productID=''){

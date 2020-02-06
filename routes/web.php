@@ -34,3 +34,4 @@ Route::resource('/userhaspermissions','UserhaspermissionController');
 Route::get('/addtocarts','CartController@addtocart')->name('addtocarts');
 Route::get('/cart','CartController@cartlist');
 Route::get('/carts/delete/{id}','CartController@destroy')->name('carts.delete');
+Route::get('/updateCart','CartController@updateCart')->name('updateCart');

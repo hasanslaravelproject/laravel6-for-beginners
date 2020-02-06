@@ -4,24 +4,14 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
-
-
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+       public function index()
     {
-
 
     }
       public function addtocart(Request $request)
     {
-
-
         $product_id = $request->product_id;
         $product_name = $request->product_name;
         $product_price = $request->price;
@@ -29,87 +19,80 @@ class CartController extends Controller
        $carts = Cart::add(['id' => $product_id, 'name' =>  $product_name, 'qty' => 1,  'weight' =>'1','price' =>$product_price]);
        $html='<i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-light">'.Cart::count().'</span>';
        echo json_encode($html);
-
    }
 
    public function cartlist()
    {
-
    $carts= Cart::content();
-
-
 return view('Cart.cart',compact('carts'));
-
    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function updateCart(Request $request)
     {
-        //
+        $rowId=$request->rowId;
+        $product_id=$request->product_id;
+        $current_qty=$request->current_qty;
+        $qty=$current_qty+1;
+        $singleproduct= Product::find($product_id);
+        $product_price=$qty*$singleproduct->price;
+
+        Cart::update($rowId, ['qty' => $qty,  'price' =>$product_price]);
+        $carts= Cart::content();
+        $html['cart']='';
+        $count=1;
+        foreach($carts as $item){
+            $html['cart'].=' <tr>
+            <th scope="row">'. $count++ .'</th>
+            <td><img src="'. asset('/upload/'.single_product($item->id)->image) .'" style="height:40px;width:35px"></td>
+            <td>'. $item->name.'</td>
+            <td>'.single_product($item->id)->price.'</td>
+            <td>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon btn btn-info"><i class="fa fa-minus"></i></span>
+                    <input type="text" class="form-inline text-center current-qty_'.$item->id.' " style="width:40px" value="'. $item->qty .'">
+                       <span class="input-group-addon btn btn-info inc-qty"  data-row_id="'. $item->rowId .'" data-product_id="'. $item->id .'"><i class="fa fa-plus"></i></span>
+
+                    </div>
+                </div>
+              </td>
+            <td>'.  $item->price  .'</td>
+            <td>'. delete_btn_helper('carts.delete', $item->rowId).'
+            </td>
+
+          </tr>';
+        }
+        $html['cardcount'] ='<i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-light">'.Cart::count().'</span>';
+
+        echo json_encode($html);
+
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $rowID='')
     {
 
         Cart::remove($rowID);
         //Cart::destroy($rowID);
-
-
        return redirect()->back()
             ->with('success','Product deleted successfully');
     }
