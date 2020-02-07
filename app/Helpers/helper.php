@@ -33,6 +33,10 @@ function increment_btn_helper($route_name='',$data_id=''){
     $increment_html='<a href="'.route($route_name, $data_id).'" class="btn btn-info" ><i class="fa fa-plus-square"> </i></a>';
     return  $increment_html;
 }
+function decrement_btn_helper($route_name='',$data_id=''){
+    $decrement_html='<a href="'.route($route_name, $data_id).'" class="btn btn-info" ><i class="fa fa-minus-square"> </i></a>';
+    return  $decrement_html;
+}
 
 function single_product($productID=''){
    $singleproduct= Product::find($productID);

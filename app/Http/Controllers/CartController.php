@@ -18,12 +18,14 @@ class CartController extends Controller
 
        $carts = Cart::add(['id' => $product_id, 'name' =>  $product_name, 'qty' => 1,  'weight' =>'1','price' =>$product_price]);
        $html='<i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-light">'.Cart::count().'</span>';
+
        echo json_encode($html);
    }
 
    public function cartlist()
    {
    $carts= Cart::content();
+
 return view('Cart.cart',compact('carts'));
    }
 
@@ -53,10 +55,11 @@ return view('Cart.cart',compact('carts'));
         $current_qty=$request->current_qty;
         $qty=$current_qty+1;
         $singleproduct= Product::find($product_id);
-        $product_price=$qty*$singleproduct->price;
+        $product_price=$singleproduct->price;
 
         Cart::update($rowId, ['qty' => $qty,  'price' =>$product_price]);
         $carts= Cart::content();
+
         $html['cart']='';
         $count=1;
         foreach($carts as $item){
@@ -75,13 +78,14 @@ return view('Cart.cart',compact('carts'));
                     </div>
                 </div>
               </td>
-            <td>'.  $item->price  .'</td>
+            <td>'. $item->qty*$item->price  .'</td>
             <td>'. delete_btn_helper('carts.delete', $item->rowId).'
             </td>
 
           </tr>';
         }
         $html['cardcount'] ='<i class="fa fa-shopping-cart"></i> Cart <span class="badge badge-light">'.Cart::count().'</span>';
+        $html['subtotals'] = ' <td >Total:'.Cart::subtotal().'</td> ';
 
         echo json_encode($html);
 

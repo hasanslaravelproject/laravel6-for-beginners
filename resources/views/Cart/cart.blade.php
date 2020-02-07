@@ -48,7 +48,9 @@
 
 
                   </td>
-                <td>{{   $item->price }}</td>
+                <td>{{   $item->qty*$item->price }}</td>
+
+
 
                 <td>
                     {!! delete_btn_helper('carts.delete', $item->rowId) !!}
@@ -63,7 +65,14 @@
                   Cart is Empty----
               </tr>
               @endif
+
+
             </tbody>
+            <tr class="subtotals">
+
+                <td >Total:<?php echo Cart::subtotal(); ?></td>
+
+            </tr>
           </table>
 
 
@@ -93,6 +102,8 @@
            console.log(response);
            $('.cart_list').html(response.cart);
            $('.cart_count').html(response.cardcount);
+           $('.subtotals').html(response.subtotals);
+
        }
   });
 });
