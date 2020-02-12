@@ -42,3 +42,8 @@ function single_product($productID=''){
    $singleproduct= Product::find($productID);
    return $singleproduct;
 }
+
+function Checkout_btn_helper($route_name='',$data_id=''){
+    $Checkout_html='<a href="'.route($route_name, $data_id).'" class="btn btn-info" >Checkout</a>';
+    return  $Checkout_html;
+}

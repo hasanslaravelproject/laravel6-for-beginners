@@ -34,4 +34,7 @@ Route::resource('/userhaspermissions','UserhaspermissionController');
 Route::get('/addtocarts','CartController@addtocart')->name('addtocarts');
 Route::get('/cart','CartController@cartlist');
 Route::get('/carts/delete/{id}','CartController@destroy')->name('carts.delete');
+Route::get('/incrementCart','CartController@incrementCart')->name('incrementCart');
+Route::get('/decrementCart','CartController@decrementCart')->name('decrementCart');
 Route::get('/updateCart','CartController@updateCart')->name('updateCart');
+Route::get('/checkout','CartController@checkout')->name('checkout');
